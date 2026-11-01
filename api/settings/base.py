@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 # DATABASE CONFIGURATION
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': BASE_DIR / 'db.sqlite3',
-     }
- }
+    "default": env.db(
+        "DATABASE_URL",
+        default="postgres://termin_user:termin123@db:5432/termin_db",
+    ),
+}
 
 
 # Password validation
