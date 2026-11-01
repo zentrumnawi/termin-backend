@@ -3,7 +3,10 @@ from .base import *  # noqa
 
 DEBUG = True
 
-SECRET_KEY = "django-insecure-tkghqim*+8e62rin#o81_&tm4o^r7m#_&if^7k*r+xe=!v%&m_"
+SECRET_KEY = env(
+    "DJANGO_SECRET_KEY",
+    default="django-insecure-tkghqim*+8e62rin#o81_&tm4o^r7m#_&if^7k*r+xe=!v%&m_",
+)
 
 ALLOWED_HOSTS = ["*"]
 
