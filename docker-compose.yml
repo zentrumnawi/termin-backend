@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: termin_db
+      POSTGRES_USER: termin_user
+      POSTGRES_PASSWORD: termin123
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U termin_user -d termin_db"]
+      interval: 10s
+      timeout: 8s
+      retries: 20
+
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/local/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+          DATABASE_URL: postgres://termin_user:termin123@db:5432/termin_db
+          DJANGO_SETTINGS_MODULE: api.settings.local
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: bash -lc "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    

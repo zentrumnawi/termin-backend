@@ -1,0 +1,19 @@
+[project]
+name = "termin-backend"
+version = "0.1.0"
+description = "Manage appointments"
+authors = [
+    {name = "None"}
+]
+requires-python = ">=3.12"
+dependencies = [
+    "django (>=6.1.2,<7.0.0)"
+]
+
+[tool.poetry]
+package-mode = false
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
