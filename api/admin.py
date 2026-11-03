@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Appointment, Student
+from .models import Appointment, Shift, Student
 
 
 @admin.register(Student)
@@ -19,3 +19,10 @@ class AppointmentAdmin(admin.ModelAdmin):
         "tutor__username",
         "comment",
     )
+
+
+@admin.register(Shift)
+class ShiftAdmin(admin.ModelAdmin):
+    list_display = ("date", "time", "tutor")
+    list_filter = ("date", "tutor")
+    search_fields = ("tutor__username",)
