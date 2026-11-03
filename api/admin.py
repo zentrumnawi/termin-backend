@@ -11,10 +11,11 @@ class StudentAdmin(admin.ModelAdmin):
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ("date", "time", "student", "cancelled")
-    list_filter = ("cancelled", "date")
+    list_display = ("date", "time", "student", "tutor")
+    list_filter = ("date", "tutor")
     search_fields = (
         "student__last_name",
         "student__email",
+        "tutor__username",
         "comment",
     )

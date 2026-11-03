@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -19,6 +20,13 @@ class Appointment(models.Model):
     student = models.ForeignKey(
         Student,
         on_delete=models.CASCADE,
+        related_name="appointments",
+    )
+    tutor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         related_name="appointments",
     )
     comment = models.TextField(blank=True)
