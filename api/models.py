@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -21,6 +22,13 @@ class Appointment(models.Model):
         on_delete=models.CASCADE,
         related_name="appointments",
     )
+    tutor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="appointments",
+    )
     comment = models.TextField(blank=True)
     cancelled = models.BooleanField(default=False)
 
@@ -29,3 +37,25 @@ class Appointment(models.Model):
 
     def __str__(self) -> str:
         return f"{self.date} {self.time} - {self.student}"
+
+
+class Shift(models.Model):
+    date = models.DateField()
+    time = models.TimeField()
+    tutor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="shifts",
+    )
+
+    class Meta:
+        ordering = ["date", "time"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["date", "time", "tutor"],
+                name="unique_shift_per_tutor",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.date} {self.time} - {self.tutor}"
