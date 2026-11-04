@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django import forms
+from django.db import models
 
 from .models import Appointment, Shift, Student
 
@@ -19,6 +21,11 @@ class AppointmentAdmin(admin.ModelAdmin):
         "tutor__username",
         "comment",
     )
+    formfield_overrides = {
+        models.TimeField: {
+            "widget": forms.TimeInput(format="%H:%M", attrs={"type": "time"})
+        },
+    }
 
 
 @admin.register(Shift)
@@ -26,3 +33,8 @@ class ShiftAdmin(admin.ModelAdmin):
     list_display = ("date", "time", "tutor")
     list_filter = ("date", "tutor")
     search_fields = ("tutor__username",)
+    formfield_overrides = {
+        models.TimeField: {
+            "widget": forms.TimeInput(format="%H:%M", attrs={"type": "time"})
+        },
+    }
